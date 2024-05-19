@@ -136,7 +136,7 @@ submitButton.addEventListener("click", () => {
   const selectedsubmitButton = document.querySelector(
     'input[name="answer-list"]:checked'
   );
-  console.log(selectedsubmitButton);
+  // console.log(selectedsubmitButton);
   submitAnswer(parseInt(selectedsubmitButton.value));
 
   // console.log(submitButton.value);
