@@ -93,9 +93,11 @@ function loadQuestion() {
     submitButton.type = "radio";
     submitButton.name = "answer-list";
     submitButton.value = index;
+    submitButton.id = `option${index}`;
 
     const label = document.createElement("label");
     label.textContent = option;
+    label.setAttribute("for", `option${index}`);
 
     optionElement.appendChild(submitButton);
     optionElement.appendChild(label);
@@ -134,6 +136,7 @@ submitButton.addEventListener("click", () => {
   const selectedsubmitButton = document.querySelector(
     'input[name="answer-list"]:checked'
   );
+  console.log(selectedsubmitButton);
   submitAnswer(parseInt(selectedsubmitButton.value));
 
   // console.log(submitButton.value);
