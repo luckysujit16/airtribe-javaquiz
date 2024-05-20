@@ -82,6 +82,7 @@ let selectedIndex = submitButton.value;
 
 function loadQuestion() {
   // Load the first question and load subsequent question from this function
+
   const currentQuestion = questions[currentQuestionIndex];
   questionContainer.textContent = currentQuestion.text;
 
@@ -103,17 +104,35 @@ function loadQuestion() {
     optionElement.appendChild(label);
 
     optionsContainer.appendChild(optionElement);
+
     nextButton.hidden = true;
     optionsContainer.style.color = "black";
+  });
+
+  submitButton.disabled = true;
+  submitButton.hidden = true;
+
+  addEventListener("click", () => {
+    if (submitButton.disabled === true) {
+      submitButton.disabled = false;
+      submitButton.hidden = false;
+      // console.log("if Condition");
+    } else if (
+      submitButton.disabled === false &&
+      submitButton.hidden === false
+    ) {
+      submitButton.disabled = true;
+      addEventListener("click", () => (submitButton.disabled = false));
+      // console.log("else Condition");
+    }
   });
 }
 
 function submitAnswer(selectedIndex) {
   const currentQuestion = questions[currentQuestionIndex];
-
   if (selectedIndex === currentQuestion.correct) {
     // Handle correct answer
-    submitButton.disabled = true;
+    submitButton.hidden = true;
     (optionsContainer.style.color = "green"),
       (optionsContainer.innerHTML =
         "<h4>Congratulations!! Correct Answer!<h4>");
@@ -123,7 +142,7 @@ function submitAnswer(selectedIndex) {
     return correctCount;
   } else {
     // Handle incorrect answer
-    submitButton.disabled = true;
+    submitButton.hidden = true;
     nextButton.hidden = false;
     (optionsContainer.style.color = "red"),
       (optionsContainer.innerHTML = "<h4>Sorry!! Wrong Answer<h4>");
@@ -133,19 +152,19 @@ function submitAnswer(selectedIndex) {
 
 submitButton.addEventListener("click", () => {
   // Implement the logic when the user clicks on submit button. The answer selected by the user should be validated here with the correct option
+  // alert("Answer Selected");
   const selectedsubmitButton = document.querySelector(
     'input[name="answer-list"]:checked'
   );
+
   // console.log(selectedsubmitButton);
   submitAnswer(parseInt(selectedsubmitButton.value));
-
   // console.log(submitButton.value);
 });
 
 nextButton.addEventListener("click", () => {
   // Implement the logic for showing the next question in the questions array. Basic DOM manipulation methods are required here.
   // Also check for quiz completion here as well
-  submitButton.disabled = false;
   currentQuestionIndex++;
   if (currentQuestionIndex < questions.length && currentQuestionIndex < 9) {
     // console.log("Question Index = " + currentQuestionIndex);
